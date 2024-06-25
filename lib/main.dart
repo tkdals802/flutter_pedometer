@@ -23,18 +23,7 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-               FutureBuilder<RxInt>(
-                 future: pedometerController.getCurrentStep(),
-                 builder: (context,snapshot){
-                   if(snapshot.connectionState == ConnectionState.waiting){
-                     return CircularProgressIndicator();
-                   }else if(snapshot.hasError){
-                     return Text('Error : ${snapshot.error}');
-                   }else{
-                     return Text('current Step${snapshot.data}');
-                   }
-                 },
-               )
+              Obx(() => Text(pedometerController.getStep())),
 
               //Obx(()=>Text('${pedometerController.getCurrentStep()}')
 

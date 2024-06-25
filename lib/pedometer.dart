@@ -11,19 +11,22 @@ class WalkService{
 
   Future<int> getCurrentStep() {
     print('${_currentSteps}');
+    // return _currentSteps;
     return Future<int>.value(_currentSteps);
   }
 
   void updateStep(StepCount event) async{
+
     _totalSteps = event.steps;
+
+
+
+
     _currentSteps = _totalSteps - _pastSteps;
     //print('init ${_currentSteps},${_totalSteps}, ${_pastSteps}');
   }
 
   void resetStepTimer() {
-    DateTime now = DateTime.now();
-    DateTime nextMidnight = DateTime(now.year, now.month, now.day, now.second+10);
-
     _pastSteps = _totalSteps;
     print('reset timer ${_totalSteps}, ${_currentSteps}, ${_pastSteps}');
   }

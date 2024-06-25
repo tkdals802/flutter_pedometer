@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:get/get.dart';
@@ -18,13 +16,19 @@ class PedometerController extends GetxController{
       walkService.resetStepTimer();
     });
     Timer.periodic(const Duration(seconds: 1), (t){
-      getCurrentStep();
+      getCurrentStep().then((step){
+        _currentStep.value = step;
+      });
     });
   }
 
-  Future<RxInt> getCurrentStep() async{
+  Future<int> getCurrentStep() async {
     _currentStep.value = await walkService.getCurrentStep();
-    return _currentStep;
+    return _currentStep.value;
+  }
+
+  String getStep() {
+    return _currentStep.value.toString();
   }
 
 
