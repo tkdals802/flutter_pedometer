@@ -13,6 +13,7 @@ class PedometerController extends GetxController{
     print('init');
     walkService.initPlatformState();
     Timer.periodic(const Duration(seconds: 10), (t){
+
       walkService.resetStepTimer();
     });
     Timer.periodic(const Duration(seconds: 1), (t){
