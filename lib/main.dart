@@ -12,9 +12,13 @@ void main() {
 class MyApp extends StatelessWidget {
   final PedometerController pedometerController = Get.put(PedometerController());
 
+  void init(){
+    pedometerController
+  }
+
   @override
   Widget build(BuildContext context) {
-    //initState();
+    init();
     return GetMaterialApp(
       home: Scaffold(
         appBar: AppBar(),

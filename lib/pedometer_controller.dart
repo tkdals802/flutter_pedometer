@@ -2,22 +2,25 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:practice4/pedometer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class PedometerController extends GetxController{
+class PedometerController extends GetxController {
   late final WalkService walkService = WalkService();
   RxInt _currentStep = 0.obs;
 
-  @override
-  void onInit(){
-    super.onInit();
-    print('init');
-    walkService.initPlatformState();
-    Timer.periodic(const Duration(seconds: 10), (t){
+  late int pastYear;
+  late int pastMonth;
+  late int pastDay;
 
+  @override
+  void onInit() {
+    super.onInit();
+    walkService.initPlatformState();
+    Timer.periodic(const Duration(seconds: 20), (t) {
       walkService.resetStepTimer();
     });
-    Timer.periodic(const Duration(seconds: 1), (t){
-      getCurrentStep().then((step){
+    Timer.periodic(const Duration(seconds: 1), (t) {
+      getCurrentStep().then((step) {
         _currentStep.value = step;
       });
     });
@@ -31,6 +34,5 @@ class PedometerController extends GetxController{
   String getStep() {
     return _currentStep.value.toString();
   }
-
 
 }

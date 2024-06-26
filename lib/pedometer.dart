@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WalkService{
+class WalkService {
   late Stream<StepCount> _stepCountStream;
 
   static final String KEY = 'pastSteps';
@@ -13,35 +13,30 @@ class WalkService{
   int _totalSteps = 0;
 
   Future<int> getCurrentStep() {
-    print('${_currentSteps}');
-    // return _currentSteps;
     return Future<int>.value(_currentSteps);
   }
 
-  void updateStep(StepCount event) async{
+  void updateStep(StepCount event) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     _totalSteps = event.steps;
 
     int? value = pref.getInt(KEY);
 
-    if(value==null){
+    if (value == null) {
       _pastSteps = _totalSteps;
-      pref.setInt(KEY,_totalSteps);
-    }else{
+      pref.setInt(KEY, _totalSteps);
+    } else {
       _pastSteps = value;
-      print('value ${value}');
     }
-
-    _currentSteps = _totalSteps - _pastSteps;
-    print('init ${_currentSteps},${_totalSteps}, ${_pastSteps}');
+    _currentSteps = _totalSteps - _pastSteps ;
   }
 
-  void resetStepTimer() async{
+  void resetStepTimer() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _pastSteps = _totalSteps;
-    pref.setInt(KEY,_totalSteps);
-    print('reset timer ${_totalSteps}, ${_currentSteps}, ${_pastSteps}');
+    _currentSteps = 0;
+    pref.setInt(KEY, _totalSteps);
   }
 
   void onStepCountError(error) {
@@ -52,5 +47,4 @@ class WalkService{
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(updateStep).onError(onStepCountError);
   }
-
 }
